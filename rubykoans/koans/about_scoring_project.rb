@@ -30,6 +30,9 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 # Your goal is to write the score method.
 
 def score(dice)
+  #count number of 1s
+  #count number of 5s
+  #count other number to see if they match >=3 
   # You need to write this method
 end
 
