@@ -30,11 +30,50 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 # Your goal is to write the score method.
 
 def score(dice)
-  #count number of 1s
-  #count number of 5s
-  #count other number to see if they match >=3 
-  # You need to write this method
+  #can only have upto 5 dice
+  if dice.count > 5 || dice.count <= 0 
+    return 0;
+  end
+
+  #array for counting numbers
+  count = Array.new(7, 0)
+  #iterate over the array
+  dice.each {|score| count[score]+= 1 }
+
+  totalScore = 0
+  #score each number
+  count.each_with_index {|count, index| totalScore += score_number(count, index) }
+  return totalScore
 end
+
+def score_number(count, value)
+  if value == 1 || value == 5
+    return score_1_5(count, value)
+  elsif count >= 3
+    return value * 100
+  else 
+    return 0
+  end
+end
+
+def score_1_5(count, value)
+  score = 0
+  multiplier = 100
+  if value == 1
+    multiplier = 1000
+  end
+
+  if count >= 3
+    score = value * multiplier
+    count %= 3
+  end
+
+  #multilier for a non set of 3
+  multiplier /= 10
+  score += value * count * multiplier
+  return score
+end
+
 
 class AboutScoringProject < Neo::Koan
   def test_score_of_an_empty_list_is_zero
